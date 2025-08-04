@@ -1,38 +1,193 @@
-.App {
-  text-align: center;
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
+@layer components {
+  /* Burnt orange color scheme */
+  .gold-accent {
+    color: #CC5500;
+  }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+  .text-gold-accent {
+    color: #CC5500;
+  }
+
+  .bg-gold-accent {
+    background-color: #CC5500;
+  }
+
+  .border-gold-accent {
+    border-color: #CC5500;
+  }
+
+  .text-shadow-gold {
+    text-shadow: 0 0 10px rgba(204, 85, 0, 0.3), 0 0 20px rgba(204, 85, 0, 0.2);
+  }
+
+  /* Elegant design components with burnt orange colors */
+  .glass-morphism-elegant {
+    background: rgba(42, 26, 18, 0.4); /* Dark brown base */
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(204, 85, 0, 0.1); /* Burnt orange border */
+  }
+
+  .elegant-card {
+    background: rgba(42, 26, 18, 0.6); /* Dark brown */
+    border: 1px solid rgba(204, 85, 0, 0.1); /* Burnt orange */
+    backdrop-filter: blur(20px);
+  }
+
+  .elegant-hover {
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  .elegant-hover:hover {
+    transform: translateY(-2px);
+    border-color: rgba(204, 85, 0, 0.3); /* Burnt orange */
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+  }
+
+  .professional-button {
+    background: transparent;
+    border: 1px solid rgba(204, 85, 0, 0.3); /* Burnt orange */
+    color: #CC5500; /* Burnt orange */
+    transition: all 0.4s ease;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-weight: 500;
+  }
+
+  .professional-button:hover {
+    background: rgba(204, 85, 0, 0.1); /* Burnt orange */
+    border-color: rgba(204, 85, 0, 0.6); /* Burnt orange */
+    box-shadow: 0 0 20px rgba(204, 85, 0, 0.2); /* Burnt orange */
+  }
+
+  .minimal-text {
+    font-weight: 300;
+    letter-spacing: 0.01em;
+    line-height: 1.6;
+    color: #FFF8F0; /* Cream text */
+  }
+
+  .heading-elegant {
+    font-weight: 300;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: #FFF8F0; /* Cream text */
+  }
+
+  .film-grain {
+    position: relative;
+  }
+
+  .film-grain::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: radial-gradient(
+        circle at 20% 50%,
+        transparent 20%,
+        rgba(255, 255, 255, 0.01) 21%,
+        rgba(255, 255, 255, 0.01) 34%,
+        transparent 35%
+      ),
+      linear-gradient(
+        0deg,
+        transparent 24%,
+        rgba(255, 255, 255, 0.02) 25%,
+        rgba(255, 255, 255, 0.02) 26%,
+        transparent 27%
+      );
+    background-size: 75px 75px;
+    pointer-events: none;
+    opacity: 0.3;
+    animation: grain 12s steps(10) infinite;
+  }
+
+  @keyframes grain {
+    0%, 100% { transform: translate(0, 0); }
+    10% { transform: translate(-5%, -10%); }
+    20% { transform: translate(-15%, 5%); }
+    30% { transform: translate(7%, -25%); }
+    40% { transform: translate(-5%, 25%); }
+    50% { transform: translate(-15%, 10%); }
+    60% { transform: translate(15%, 0%); }
+    70% { transform: translate(0%, 15%); }
+    80% { transform: translate(3%, 35%); }
+    90% { transform: translate(-10%, 10%); }
+  }
+
+  .font-netflix {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  }
+
+  .floating-netflix {
+    animation: floatingNetflix 8s ease-in-out infinite;
+  }
+
+  @keyframes floatingNetflix {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-10px) rotate(1deg); }
+  }
+
+  .fade-in-netflix {
+    animation: fadeInNetflix 1.2s ease-out;
+  }
+
+  @keyframes fadeInNetflix {
+    0% { opacity: 0; transform: translateY(30px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes slideDown {
+    from { transform: translateY(-100%); }
+    to { transform: translateY(0); }
+  }
+
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeInRight {
+    from { opacity: 0; transform: translateX(50px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+
+  @keyframes slideInRight {
+    from { transform: translateX(100%); }
+    to { transform: translateX(0); }
   }
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+/* Burnt orange selection */
+::selection {
+  background: #CC5500; /* Burnt orange */
+  color: #FFF8F0; /* Cream */
 }
 
-.App-link {
-  color: #61dafb;
+::-moz-selection {
+  background: #CC5500; /* Burnt orange */
+  color: #FFF8F0; /* Cream */
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+/* Custom scrollbar with burnt orange colors */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #2A1A12; /* Dark brown */
+}
+
+::-webkit-scrollbar-thumb {
+  background: #CC5500; /* Burnt orange */
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #E05C00; /* Brighter burnt orange */
 }
