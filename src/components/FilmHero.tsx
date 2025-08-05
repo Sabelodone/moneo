@@ -1,296 +1,391 @@
-import { useState, useEffect, useRef } from "react"
-import { Link } from "react-router-dom"
-import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion"
-import { ArrowRight, Play, Pause, Award, Globe, Users } from "lucide-react"
+import { useState, useEffect, useRef } from "react";
+import { Link } from "react-router-dom";
+import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
+import { ArrowRight, Award, Globe, Users, Film, Clapperboard } from "lucide-react";
+
+// Updated Color Scheme for glass effect
+const COLORS = {
+  bgLight: "rgba(255, 248, 240, 0.9)",
+  bgCream: "rgba(245, 230, 216, 0.7)",
+  textDark: "#2A1A12",
+  accentOrange: "rgba(204, 85, 0, 0.8)",
+  accentGold: "rgba(212, 175, 55, 0.8)",
+  accentRed: "rgba(224, 92, 0, 0.8)",
+  accentTeal: "rgba(0, 128, 128, 0.8)",
+  accentPurple: "rgba(106, 13, 173, 0.8)",
+  glassBorder: "rgba(255, 255, 255, 0.3)",
+  glassHighlight: "rgba(255, 255, 255, 0.4)",
+};
 
 const heroTexts = [
   "INTERNATIONAL FILM PRODUCTION",
   "AWARD-WINNING STORYTELLING",
   "GLOBAL CINEMATIC EXCELLENCE",
-]
+];
+
+// Glass-like text spans with inner glow
+const GlassSpan = ({ children, color, style = {} }) => (
+  <span style={{ 
+    color, 
+    fontWeight: 600,
+    textShadow: `0 1px 2px rgba(0,0,0,0.2), 0 0 8px ${color}40`,
+    padding: '0 2px',
+    background: `linear-gradient(to right, ${color}40, transparent)`,
+    borderRadius: '2px',
+    ...style 
+  }}>
+    {children}
+  </span>
+);
+
+type TextVariants = {
+  hidden: { opacity: number; y: number };
+  visible: { opacity: number; y: number; transition: { duration: number; ease: number[] } };
+  exit: { opacity: number; y: number; transition: { duration: number } };
+};
 
 export default function FilmHero() {
-  const [isLoaded, setIsLoaded] = useState(false)
-  const [currentText, setCurrentText] = useState(0)
-  const [isPlaying, setIsPlaying] = useState(false)
-  const [isBuffering, setIsBuffering] = useState(false)
-  const [isHoveringPlay, setIsHoveringPlay] = useState(false)
-  const heroRef = useRef<HTMLDivElement | null>(null)
-  const videoRef = useRef<HTMLVideoElement | null>(null) // <- Correct typing here
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [currentText, setCurrentText] = useState(0);
+  const heroRef = useRef<HTMLDivElement>(null);
 
-  // Scroll animations
   const { scrollYProgress } = useScroll({
     target: heroRef,
     offset: ["start start", "end start"],
-  })
-  const y = useTransform(scrollYProgress, [0, 1], ["0%", "30%"])
-  const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 0])
+  });
+  const y = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
+  const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
+  const scale = useTransform(scrollYProgress, [0, 1], [1, 1.05]);
 
   useEffect(() => {
-    setIsLoaded(true)
+    setIsLoaded(true);
     const interval = setInterval(() => {
-      setCurrentText((prev) => (prev + 1) % heroTexts.length)
-    }, 4000)
-    return () => clearInterval(interval)
-  }, [])
+      setCurrentText((prev) => (prev + 1) % heroTexts.length);
+    }, 4000);
+    return () => clearInterval(interval);
+  }, []);
 
   const stats = [
     { icon: Award, value: "00+", label: "International Awards" },
     { icon: Globe, value: "0+", label: "Countries" },
     { icon: Users, value: "00+", label: "Collaborators" },
-  ]
+  ];
 
-  const toggleVideoPlayback = () => {
-    if (!videoRef.current || isBuffering) return
-
-    if (videoRef.current.paused) {
-      setIsBuffering(true)
-      videoRef.current
-        .play()
-        .then(() => setIsPlaying(true))
-        .finally(() => setIsBuffering(false))
-    } else {
-      videoRef.current.pause()
-      setIsPlaying(false)
+  const textVariants: TextVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { 
+      opacity: 1, 
+      y: 0,
+      transition: { 
+        duration: 0.8, 
+        ease: [0.25, 0.46, 0.45, 0.94] 
+      }
+    },
+    exit: { 
+      opacity: 0, 
+      y: -20,
+      transition: { 
+        duration: 0.6 
+      } 
     }
-  }
+  };
 
   return (
     <section
       ref={heroRef}
-      className="relative min-h-screen pt-16 pb-24 sm:pt-20 sm:pb-28 md:pt-24 md:pb-32 flex flex-col items-center justify-center overflow-hidden text-white"
+      className="relative min-h-screen pt-16 pb-24 sm:pt-20 sm:pb-28 md:pt-24 md:pb-32 flex flex-col items-center justify-center overflow-hidden"
       aria-label="Film Production Hero Section"
+      style={{
+        background: `linear-gradient(135deg, rgba(255,248,240,0.95) 0%, rgba(245,230,216,0.97) 100%)`,
+        color: COLORS.textDark,
+      }}
     >
-      {/* Background Video */}
-      <video
-        ref={videoRef}
-        className="absolute top-0 left-0 w-full h-full object-cover z-0"
-        src="/videos/hero-background.mp4"
-        muted
-        loop
-        playsInline
-        autoPlay
-        poster="/images/hero-poster.jpg"
-      />
-
-      {/* Video Loading Indicator */}
-      {isBuffering && (
-        <div className="absolute inset-0 z-30 flex items-center justify-center bg-black/50">
-          <div className="w-16 h-16 border-4 border-transparent border-t-red-700 rounded-full animate-spin" />
-        </div>
-      )}
-
-      {/* Overlay */}
-      {!isPlaying && (
+      {/* Glass Background with light reflections */}
+      <motion.div
+        className="absolute top-0 left-0 w-full h-full overflow-hidden"
+        style={{ scale, zIndex: 1 }}
+      >
+        <div
+          style={{
+            width: "100%",
+            height: "100%",
+            background: `linear-gradient(120deg, ${COLORS.accentOrange}30 60%, transparent 60%), linear-gradient(-120deg, ${COLORS.accentGold}20 35%, transparent 35%)`,
+            position: "absolute",
+            inset: 0,
+            zIndex: 1,
+          }}
+        />
+        
+        {/* Light reflections */}
         <motion.div
-          className="absolute inset-0 pointer-events-none z-10"
-          style={{ y }}
-        >
-          <div
-            className="w-full h-full"
-            style={{
-              backgroundImage: `linear-gradient(to right, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.4) 50%, rgba(0,0,0,0.6) 100%), 
-                              linear-gradient(to top, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.5) 100%)`,
-            }}
-          />
-          <div className="absolute inset-0 film-grain opacity-20" />
+          initial={{ x: -100, y: -100, rotate: 45 }}
+          animate={{ x: "150%", y: "150%" }}
+          transition={{
+            duration: 15,
+            repeat: Infinity,
+            ease: "linear"
+          }}
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            background: `linear-gradient(45deg, transparent 65%, ${COLORS.glassHighlight} 75%, transparent 85%)`,
+            zIndex: 2,
+          }}
+        />
+      </motion.div>
 
-          {/* Animated dots */}
-          <div className="absolute inset-0 pointer-events-none overflow-hidden">
-            {[...Array(20)].map((_, i) => (
-              <motion.div
-                key={i}
-                className="absolute w-0.5 h-0.5 bg-red-700/30 rounded-full"
-                style={{
-                  left: `${Math.random() * 100}%`,
-                  top: `${Math.random() * 100}%`,
-                }}
-                animate={{
-                  x: [0, (Math.random() - 0.5) * 40],
-                  y: [0, (Math.random() - 0.5) * 40],
-                  opacity: [0.1, 0.3, 0.1],
-                  scale: [1, 1.5, 1],
-                }}
-                transition={{
-                  duration: 10 + Math.random() * 10,
-                  repeat: Infinity,
-                  repeatType: "reverse",
-                  ease: "easeInOut",
-                }}
-              />
-            ))}
-          </div>
-        </motion.div>
-      )}
+      {/* Frosted Glass Overlay */}
+      <motion.div
+        className="absolute inset-0 z-10"
+        style={{ y }}
+      >
+        <div
+          className="w-full h-full"
+          style={{
+            backdropFilter: "blur(12px)",
+            WebkitBackdropFilter: "blur(12px)",
+            background: `linear-gradient(to right, rgba(245, 230, 216, 0.6) 0%, rgba(245, 230, 216, 0.4) 50%, rgba(245, 230, 216, 0.6) 100%)`,
+            boxShadow: `inset 0 0 20px rgba(255, 255, 255, 0.3)`,
+          }}
+        />
+      </motion.div>
 
-      {/* Main Content Container */}
+      {/* Main Content */}
       <motion.div
         className="relative z-20 flex flex-col justify-between w-full max-w-7xl px-4 sm:px-6 md:px-8 lg:px-12 py-12 sm:py-16 md:py-20 h-full"
         style={{ opacity }}
       >
-        {/* Text content when NOT playing */}
-        {!isPlaying && (
-          <div className="flex-1 flex flex-col items-center justify-center text-center">
-            <AnimatePresence mode="wait">
-              <motion.h2
-                key={currentText}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                transition={{ duration: 0.8, ease: "easeInOut" }}
-                className="font-light text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl tracking-wide mb-4 sm:mb-6 md:mb-8 select-none px-2"
-                aria-live="polite"
-                style={{ 
-                  color: "#F87171", 
-                  textShadow: "0 0 12px rgba(0,0,0,0.8)",
-                  lineHeight: 1.2
-                }}
-              >
-                {heroTexts[currentText]}
-              </motion.h2>
-            </AnimatePresence>
-
-            <motion.p
-              initial={{ opacity: 0, y: 30 }}
-              animate={isLoaded ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-              transition={{ delay: 0.8, duration: 1.2, ease: "easeOut" }}
-              className="max-w-3xl font-light text-base sm:text-lg md:text-xl lg:text-2xl leading-relaxed mb-8 sm:mb-12 md:mb-16 px-2 sm:px-4"
-              style={{ 
-                color: "rgba(255,255,255,0.9)", 
-                textShadow: "0 0 8px rgba(0,0,0,0.8)",
-                lineHeight: 1.6
+        {/* Text Content */}
+        <div className="flex-1 flex flex-col items-center justify-center text-center space-y-8 sm:space-y-12 md:space-y-16">
+          <AnimatePresence mode="wait">
+            <motion.h2
+              key={currentText}
+              variants={textVariants}
+              initial="hidden"
+              animate="visible"
+              exit="exit"
+              className="font-light text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl tracking-wide select-none px-2"
+              aria-live="polite"
+              style={{
+                lineHeight: 1.2,
+                textShadow: `0 2px 10px rgba(0,0,0,0.1)`
               }}
             >
-              Based in Johannesburg, South Africa, we create award-winning films that inspire and transcend borders.
-              Our work has been recognized at prestigious festivals worldwide for authentic storytelling and cinematic excellence.
-            </motion.p>
+              {currentText === 0 && (
+                <>
+                  <GlassSpan color={COLORS.accentOrange}>INTERNATIONAL</GlassSpan>{' '}
+                  <GlassSpan color={COLORS.accentGold} style={{ fontStyle: 'italic' }}>FILM</GlassSpan>{' '}
+                  <GlassSpan color={COLORS.accentRed}>PRODUCTION</GlassSpan>
+                </>
+              )}
+              {currentText === 1 && (
+                <>
+                  <GlassSpan color={COLORS.accentGold}>AWARD-WINNING</GlassSpan>{' '}
+                  <GlassSpan color={COLORS.accentPurple} style={{ textDecoration: 'underline' }}>STORYTELLING</GlassSpan>
+                </>
+              )}
+              {currentText === 2 && (
+                <>
+                  <GlassSpan color={COLORS.accentTeal}>GLOBAL</GlassSpan>{' '}
+                  <GlassSpan color={COLORS.accentOrange}>CINEMATIC</GlassSpan>{' '}
+                  <GlassSpan color={COLORS.accentGold}>EXCELLENCE</GlassSpan>
+                </>
+              )}
+            </motion.h2>
+          </AnimatePresence>
 
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={isLoaded ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-              transition={{ delay: 1, duration: 1, ease: "easeOut" }}
-              className="flex flex-wrap justify-center items-center gap-4 sm:gap-6 md:gap-8 lg:gap-10 mb-8 sm:mb-12 md:mb-16 w-full px-2"
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={isLoaded ? { opacity: 1, y: 0 } : {}}
+            transition={{ delay: 0.8, duration: 1.2, ease: "easeOut" }}
+            className="max-w-3xl"
+          >
+            <div 
+              className="font-light text-base sm:text-lg md:text-xl lg:text-2xl leading-relaxed px-4 py-6 sm:px-6 sm:py-8"
+              style={{
+                color: COLORS.textDark,
+                backdropFilter: "blur(8px)",
+                WebkitBackdropFilter: "blur(8px)",
+                background: `rgba(255, 248, 240, 0.4)`,
+                borderRadius: "12px",
+                boxShadow: `
+                  0 4px 20px rgba(204, 85, 0, 0.1),
+                  inset 0 0 16px rgba(255, 255, 255, 0.3),
+                  inset 0 0 4px rgba(255, 255, 255, 0.4)
+                `,
+                border: `1px solid ${COLORS.glassBorder}`,
+                borderTop: `1px solid ${COLORS.glassHighlight}`,
+                borderLeft: `1px solid ${COLORS.glassHighlight}`,
+              }}
             >
-              {stats.map(({ icon: Icon, value, label }, index) => (
-                <motion.div
-                  key={label}
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={isLoaded ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
-                  transition={{ 
-                    delay: 1.2 + index * 0.15, 
-                    duration: 0.8,
-                    ease: "backOut"
+              Based in <GlassSpan color={COLORS.accentTeal}>Johannesburg, South Africa</GlassSpan>, we create <GlassSpan color={COLORS.accentGold} style={{ fontWeight: 700 }}>award-winning</GlassSpan> films that <GlassSpan color={COLORS.accentPurple}>inspire</GlassSpan> and <GlassSpan color={COLORS.accentRed}>transcend borders</GlassSpan>.
+              Our work has been recognized at <GlassSpan color={COLORS.accentOrange}>prestigious festivals</GlassSpan> worldwide for <GlassSpan color={COLORS.accentGold}>authentic storytelling</GlassSpan> and <GlassSpan color={COLORS.accentTeal}>cinematic excellence</GlassSpan>.
+            </div>
+          </motion.div>
+
+          {/* Glass Stat Cards */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={isLoaded ? { opacity: 1, y: 0 } : {}}
+            transition={{ delay: 1, duration: 1, ease: "easeOut" }}
+            className="flex flex-wrap justify-center gap-6 sm:gap-8 lg:gap-10 w-full px-2"
+          >
+            {stats.map(({ icon: Icon, value, label }, index) => (
+              <motion.div
+                key={label}
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={isLoaded ? { opacity: 1, scale: 1 } : {}}
+                transition={{
+                  delay: 1.2 + index * 0.15,
+                  duration: 0.8,
+                  ease: "backOut",
+                  type: "spring",
+                  stiffness: 300
+                }}
+                className="text-center group relative"
+                whileHover={{ 
+                  y: -5,
+                  transition: { type: "spring", stiffness: 400 }
+                }}
+              >
+                <div 
+                  className="relative inline-flex flex-col items-center p-4 sm:p-6 rounded-xl z-10"
+                  style={{
+                    backdropFilter: "blur(8px)",
+                    WebkitBackdropFilter: "blur(8px)",
+                    background: `rgba(255, 248, 240, 0.4)`,
+                    boxShadow: `
+                      0 4px 12px rgba(204, 85, 0, 0.1),
+                      inset 0 0 12px rgba(255, 255, 255, 0.3),
+                      inset 0 0 2px rgba(255, 255, 255, 0.4)
+                    `,
+                    border: `1px solid ${COLORS.glassBorder}`,
+                    borderTop: `1px solid ${COLORS.glassHighlight}`,
+                    borderLeft: `1px solid ${COLORS.glassHighlight}`,
                   }}
-                  className="text-center group px-2 sm:px-0"
-                  whileHover={{ y: -5 }}
                 >
-                  <div className="relative inline-block">
-                    <Icon 
-                      className="mx-auto mb-1 sm:mb-2 w-6 sm:w-7 md:w-8 h-6 sm:h-7 md:h-8 text-red-700 group-hover:text-white transition-colors" 
-                      aria-hidden="true" 
+                  <motion.div 
+                    className="p-3 rounded-full mb-2"
+                    style={{
+                      backdropFilter: "blur(4px)",
+                      WebkitBackdropFilter: "blur(4px)",
+                      background: `rgba(204, 85, 0, 0.1)`,
+                      border: `1px solid ${COLORS.glassBorder}`,
+                      boxShadow: `inset 0 0 8px rgba(255, 255, 255, 0.3)`,
+                    }}
+                    whileHover={{ rotate: 360, scale: 1.1 }}
+                    transition={{ duration: 0.6 }}
+                  >
+                    <Icon
+                      className="w-6 sm:w-7 md:w-8 h-6 sm:h-7 md:h-8"
+                      style={{ 
+                        color: COLORS.accentGold,
+                        filter: `drop-shadow(0 1px 2px ${COLORS.accentGold}40)`
+                      }}
                     />
-                    <motion.div 
-                      className="absolute inset-0 rounded-full bg-red-700/20 scale-0 group-hover:scale-100 transition-transform"
-                      style={{ zIndex: -1 }}
-                      layoutId="statIconBg"
-                    />
-                  </div>
-                  <span className="block font-light text-2xl sm:text-3xl md:text-4xl mb-1 group-hover:text-red-700 transition-colors">
+                  </motion.div>
+                  <span className="block font-light text-2xl sm:text-3xl md:text-4xl mb-1"
+                    style={{
+                      color: COLORS.accentOrange,
+                      textShadow: `0 1px 8px rgba(0,0,0,0.1)`,
+                    }}
+                  >
                     {value}
                   </span>
-                  <p className="uppercase text-xs tracking-widest text-white/70 group-hover:text-white transition-colors">
-                    {label}
+                  <p className="uppercase text-xs tracking-widest"
+                    style={{
+                      color: COLORS.textDark,
+                      opacity: 0.9,
+                    }}
+                  >
+                    {label.split(' ').map((word, i) => (
+                      <GlassSpan 
+                        key={i} 
+                        color={[
+                          COLORS.accentOrange, 
+                          COLORS.accentGold, 
+                          COLORS.accentTeal
+                        ][i % 3]}
+                        style={{ fontSize: '0.8em' }}
+                      >
+                        {word}{' '}
+                      </GlassSpan>
+                    ))}
                   </p>
-                </motion.div>
-              ))}
-            </motion.div>
-          </div>
-        )}
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
 
-        {/* Buttons Container */}
+        {/* Glass Button with light reflection */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
-          animate={isLoaded ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+          animate={isLoaded ? { opacity: 1, y: 0 } : {}}
           transition={{ delay: 1.4, duration: 1, ease: "easeOut" }}
           className="flex flex-col sm:flex-row justify-center items-center gap-4 sm:gap-6 md:gap-8 w-full px-4"
-          style={{ 
-            position: "relative", 
+          style={{
+            position: "relative",
             zIndex: 30,
-            paddingBottom: '6rem' // Added explicit padding to prevent cutoff
+            paddingBottom: '6rem'
           }}
         >
-        {!isPlaying && (
-  <Link
-    to="/portfolio"  // This links to your PortfolioPage route
-    className="relative inline-flex items-center justify-center gap-2 sm:gap-3 px-6 sm:px-8 md:px-12 py-3 sm:py-4 tracking-wide text-xs sm:text-sm font-medium uppercase border-2 border-red-700 rounded-md text-red-700 hover:bg-red-700 hover:text-white transition-all duration-300 group overflow-hidden w-full sm:w-auto text-center min-w-[200px]"
-  >
-    <span className="relative z-10 flex items-center gap-1 sm:gap-2">
-      Explore Our Work
-      <motion.span
-        initial={{ x: 0 }}
-        whileHover={{ x: 4 }}
-        transition={{ type: "spring", stiffness: 500 }}
-      >
-        <ArrowRight size={16} className="w-4 h-4 sm:w-5 sm:h-5" />
-      </motion.span>
-    </span>
-    <span className="absolute inset-0 bg-red-700 origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500 z-0" />
-  </Link>
-)}
-
-          <motion.button
-            type="button"
-            aria-pressed={isPlaying}
-            aria-label={isPlaying ? "Pause video" : "Play video"}
-            onClick={toggleVideoPlayback}
-            onMouseEnter={() => setIsHoveringPlay(true)}
-            onMouseLeave={() => setIsHoveringPlay(false)}
-            className="relative inline-flex items-center justify-center gap-2 sm:gap-4 px-4 sm:px-6 py-3 sm:py-4 text-white hover:text-white transition-colors font-medium uppercase tracking-wide group w-full sm:w-auto min-w-[200px]"
-            whileTap={{ scale: 0.95 }}
+          <motion.div
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.98 }}
+            className="relative overflow-hidden rounded-lg"
+            style={{
+              backdropFilter: "blur(4px)",
+              WebkitBackdropFilter: "blur(4px)",
+              boxShadow: `
+                0 4px 12px rgba(204, 85, 0, 0.2),
+                inset 0 0 12px rgba(255, 255, 255, 0.3),
+                inset 0 0 2px rgba(255, 255, 255, 0.4)
+              `,
+              border: `1px solid ${COLORS.glassBorder}`,
+              borderTop: `1px solid ${COLORS.glassHighlight}`,
+              borderLeft: `1px solid ${COLORS.glassHighlight}`,
+            }}
           >
-            <motion.div 
-              className="w-10 sm:w-12 md:w-14 h-10 sm:h-12 md:h-14 flex items-center justify-center border border-white/20 rounded-md group-hover:border-red-700 group-hover:bg-red-700/10 transition-colors relative overflow-hidden"
-              whileHover={{ scale: 1.05 }}
-              transition={{ type: "spring", stiffness: 400 }}
+            <motion.div
+              initial={{ x: '-100%' }}
+              animate={{ x: '100%' }}
+              transition={{
+                duration: 3,
+                repeat: Infinity,
+                ease: "linear"
+              }}
+              style={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                width: '100%',
+                height: '100%',
+                background: `linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent)`,
+                transform: 'skewX(-20deg)',
+              }}
+            />
+            <Link
+              to="/portfolio"
+              className="relative inline-flex items-center justify-center gap-2 sm:gap-3 px-6 sm:px-8 md:px-12 py-3 sm:py-4 tracking-wide text-xs sm:text-sm font-medium uppercase rounded-lg transition-all duration-300 group overflow-hidden w-full sm:w-auto text-center min-w-[200px]"
+              style={{
+                color: COLORS.accentOrange,
+                background: `rgba(255, 248, 240, 0.3)`,
+              }}
             >
-              {isPlaying ? (
-                <Pause size={16} className="w-4 h-4 sm:w-5 sm:h-5" />
-              ) : (
-                <Play size={16} className="w-4 h-4 sm:w-5 sm:h-5" />
-              )}
-              {isHoveringPlay && (
-                <motion.span 
-                  className="absolute inset-0 bg-red-700/10 opacity-0 group-hover:opacity-100"
-                  initial={{ scale: 0 }}
-                  animate={{ scale: 1 }}
-                  transition={{ duration: 0.5 }}
-                />
-              )}
-            </motion.div>
-            <span className="relative text-xs sm:text-sm">
-              {isPlaying ? "Pause Reel" : "Watch Our Reel"}
-              <span className="absolute bottom-0 left-0 w-0 h-px bg-red-700 group-hover:w-full transition-all duration-300" />
-            </span>
-          </motion.button>
+              <span className="relative z-10 flex items-center gap-1 sm:gap-2">
+                <GlassSpan color={COLORS.accentGold}>Explore</GlassSpan>{' '}
+                <GlassSpan color={COLORS.accentOrange}>Our</GlassSpan>{' '}
+                <GlassSpan color={COLORS.accentRed}>Work</GlassSpan>
+                <ArrowRight size={16} className="w-4 h-4 sm:w-5 sm:h-5" />
+              </span>
+            </Link>
+          </motion.div>
         </motion.div>
       </motion.div>
-
-      {/* Playback Controls */}
-      {isPlaying && (
-        <motion.div 
-          className="absolute bottom-6 sm:bottom-8 md:bottom-10 left-1/2 transform -translate-x-1/2 z-30"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-        >
-          <button
-            onClick={toggleVideoPlayback}
-            className="flex items-center gap-1 sm:gap-2 text-white/70 hover:text-white px-3 sm:px-4 py-1 sm:py-2 rounded-md bg-black/30 backdrop-blur-sm text-xs sm:text-sm"
-          >
-            <Pause size={12} className="w-3 h-3" />
-            <span>Pause</span>
-          </button>
-        </motion.div>
-      )}
     </section>
-  )
+  );
 }
