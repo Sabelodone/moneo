@@ -74,22 +74,22 @@ export default function ContactSection() {
 
       <div className="relative max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
         {/* Image */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-          className="rounded-xl overflow-hidden shadow-[0_20px_40px_rgba(204,85,0,0.3)] border-2 border-[#CC5500] h-full flex items-center"
-          style={{ perspective: 900 }}
-        >
-          <img
-            src="/images/image6.jpeg"
-            alt="Cinematic Adventure"
-            className="w-full h-full object-cover transform hover:scale-105 transition-transform duration-800 ease-in-out"
-            loading="lazy"
-            style={{ minHeight: "300px", maxHeight: "600px" }}
-          />
-        </motion.div>
+       <motion.div
+  initial={{ opacity: 0, y: 20 }}
+  whileInView={{ opacity: 1, y: 0 }}
+  viewport={{ once: true }}
+  transition={{ duration: 0.8, ease: "easeOut" }}
+  className="rounded-xl overflow-hidden shadow-[0_20px_40px_rgba(204,85,0,0.3)] border-2 border-[#CC5500] flex items-stretch h-full"
+  style={{ perspective: 900 }}
+>
+  <img
+    src="/images/image6.jpeg"
+    alt="Cinematic Adventure"
+    className="w-full h-full object-cover transform hover:scale-105 transition-transform duration-800 ease-in-out rounded-xl"
+    loading="lazy"
+  />
+</motion.div>
+
 
         {/* Form + Text */}
         <motion.div
