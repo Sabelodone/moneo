@@ -11,7 +11,10 @@ export default function ContactSection() {
 
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
+  // Validation function
   const validate = () => {
     const errs: { [key: string]: string } = {};
     if (!form.name.trim()) errs.name = "Name is required";
@@ -22,32 +25,63 @@ export default function ContactSection() {
     return errs;
   };
 
+  // Handle input changes
   const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e: FormEvent) => {
+  // Handle form submission
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     const errs = validate();
     setErrors(errs);
+    setSubmitted(false);
+    setErrorMessage("");
+
     if (Object.keys(errs).length === 0) {
-      setSubmitted(true);
-      setForm({ name: "", email: "", subject: "", message: "" });
-    } else {
-      setSubmitted(false);
+      setLoading(true);
+      try {
+        const response = await fetch("/api/send-email", {
+                         method: "POST",
+                         headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify(form),
+                     });
+
+
+        if (!response.ok) {
+          throw new Error(`Server responded with status ${response.status}`);
+        }
+
+        const result = await response.json();
+
+        if (result.success) {
+          setSubmitted(true);
+          setForm({ name: "", email: "", subject: "", message: "" });
+          setErrors({});
+        } else {
+          setErrorMessage(result.error || "Failed to send email");
+        }
+      } catch (err: any) {
+        console.error(err);
+        setErrorMessage(
+          err.message.includes("Failed to fetch")
+            ? "Cannot connect to the server. Please try again later."
+            : `An error occurred: ${err.message}`
+        );
+      } finally {
+        setLoading(false);
+      }
     }
   };
 
   return (
     <section className="relative bg-gradient-to-br from-[#FFF8F0] via-[#F5E6D8] to-[#FFF8F0] text-[#2A1A12] py-20 px-6 lg:px-20 overflow-hidden font-sans">
-      {/* Subtle animated background */}
+      {/* Animated background */}
       <div className="absolute inset-0 -z-10 opacity-20 animate-flicker bg-gradient-radial from-[#CC5500]/30 via-transparent to-[#FFF8F0]"></div>
-
-      {/* Light overlay */}
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-tr from-[#CC5500]/15 via-[#FFF8F0]/75 to-[#FFF8F0]/90 mix-blend-overlay"></div>
 
       <div className="relative max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center">
-        {/* Left: Image */}
+        {/* Left image */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -88,28 +122,24 @@ export default function ContactSection() {
           </p>
 
           <p className="mb-10 font-light text-[#2A1A12]/70 leading-relaxed tracking-wide">
-            Contact us via email, phone, or visit our website and social media handles to explore the endless possibilities of storytelling.
+            Contact us via email, phone, or visit our website and social media handles.
             <br />
             <span className="block mt-3 text-lg font-semibold tracking-tight">+27 67 766 2899</span>
             <a
-              href="mailto:production@moneolms.co.za"
+              href="mailto:info@moneofilms.co.za"
               className="inline-block mt-2 underline text-[#CC5500] hover:text-[#E05C00] transition-colors"
             >
-              production@moneolms.co.za
+              info@moneofilms.co.za
             </a>
             <br />
             <a
-              href="https://www.moneolms.co.za"
+              href="https://www.moneofilms.co.za"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-block mt-1 underline text-[#CC5500] hover:text-[#E05C00] transition-colors"
             >
-              www.moneolms.co.za
+              www.moneofilms.co.za
             </a>
-          </p>
-
-          <p className="mb-10 italic font-light text-[#2A1A12]/60 tracking-wide leading-relaxed">
-            We look forward to collaborating with you — crafting stories that resonate globally. Let's create cinematic magic together that transcends boundaries.
           </p>
 
           {/* Form */}
@@ -138,10 +168,13 @@ export default function ContactSection() {
 
             <button
               type="submit"
-              className="relative inline-block bg-[#CC5500] hover:bg-[#E05C00] text-[#FFF8F0] uppercase font-semibold tracking-widest px-12 py-4 rounded shadow-lg transition duration-300 ease-in-out overflow-hidden focus:outline-none focus:ring-4 focus:ring-[#CC5500] focus:ring-opacity-70"
+              disabled={loading}
+              className={`relative inline-block bg-[#CC5500] hover:bg-[#E05C00] text-[#FFF8F0] uppercase font-semibold tracking-widest px-12 py-4 rounded shadow-lg transition duration-300 ease-in-out overflow-hidden focus:outline-none focus:ring-4 focus:ring-[#CC5500] focus:ring-opacity-70 ${
+                loading ? "opacity-50 cursor-not-allowed" : ""
+              }`}
               aria-label="Submit contact form"
             >
-              <span className="relative z-10">Drop Us A Line</span>
+              <span className="relative z-10">{loading ? "Sending..." : "Drop Us A Line"}</span>
               <span className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-[#E05C00] via-[#CC5500] to-[#E05C00] opacity-25 animate-gradient-x rounded"></span>
             </button>
 
@@ -158,11 +191,24 @@ export default function ContactSection() {
                   Thank you for reaching out! We will get back to you soon.
                 </motion.p>
               )}
+              {errorMessage && (
+                <motion.p
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 10 }}
+                  transition={{ duration: 0.5 }}
+                  className="text-red-500 font-light text-lg mt-4"
+                  role="alert"
+                >
+                  {errorMessage}
+                </motion.p>
+              )}
             </AnimatePresence>
           </form>
         </motion.div>
       </div>
 
+      {/* Animations CSS */}
       <style>{`
         @keyframes gradient-x {
           0%, 100% { background-position: 0% center; }
@@ -172,15 +218,9 @@ export default function ContactSection() {
           background-size: 200% 100%;
           animation: gradient-x 3s ease infinite;
         }
-
-        /* Flicker animation for background */
         @keyframes flicker {
-          0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
-            opacity: 1;
-          }
-          20%, 22%, 24%, 55% {
-            opacity: 0.4;
-          }
+          0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% { opacity: 1; }
+          20%, 22%, 24%, 55% { opacity: 0.4; }
         }
         .animate-flicker {
           animation: flicker 3s linear infinite;
@@ -190,7 +230,8 @@ export default function ContactSection() {
   );
 }
 
-// Floating input with label animation
+// Floating input and textarea components remain unchanged from your original code
+
 function FloatingInput({
   label,
   name,
@@ -248,7 +289,6 @@ function FloatingInput({
   );
 }
 
-// Floating textarea
 function FloatingTextarea({
   label,
   name,

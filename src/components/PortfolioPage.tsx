@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useMemo } from "react";
+
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Play,
@@ -38,370 +39,99 @@ const blueAccent = "#2176FF";
 // Make sure to paste your full projects array here
 
 const projects: Project[] = [
-{
-    id: 1,
-    title: "SCANDAL",
-    company: "OCHRE MOVING PICTURES",
-    category: "TV Series",
-    image: "/images/image9.jpeg",
-    description:
-      "A gripping drama series that captivated audiences with its compelling storylines and exceptional performances.",
-    year: "2023",
-    awards: ["Best Drama Series", "Outstanding Performance"],
-    youtubeLink: "https://www.youtube.com/embed/ES5ESo6l9VQ?autoplay=1",
-  },
   {
     id: 7,
-    title: "S'JOLA SONKE",
-    company: "BRIGHT FIRE",
+    title: "TLTBW Trailer 2",
+    company: "Moneo films",
     category: "TV Series",
-    image: "/images/Screenshot 2025-07-29 150625.png",
-    description: "A community-focused series highlighting social issues and human connections.",
-    year: "2023",
-    youtubeLink: "https://www.youtube.com/embed/fkh2--Y_SGg?autoplay=1",
+    image: "/images/image9.jpeg",
+    description: "A gripping drama series that captivated audiences with its compelling storylines and exceptional performances.",
+    year: "2025",
+    youtubeLink: "https://www.youtube.com/embed/gvpxpNQKdPk?autoplay=1",
   },
-  {
-    id: 30,
-    title: "SAINTS & SINNERS S1",
-    company: "PENGUIN FILMS",
-    category: "TV Series",
-    image: "/images/Screenshot 2025-07-29 144508.png",
-    description: "A drama series exploring moral complexities and human nature.",
-    year: "2022",
-    youtubeLink: "https://www.youtube.com/embed/ZsDbiAb58TY?autoplay=1",
-  },
-  {
-    id: 35,
-    title: "SOCIETY S2 & 3",
-    company: "PUO-PHA",
-    category: "TV Series",
-    image: "/images/0106314_300_192 (1).jpeg",
-    description: "Multiple seasons of this social commentary series exploring contemporary issues.",
-    year: "2022-2023",
-    youtubeLink: "https://www.youtube.com/embed/p_MFj09InpM?autoplay=1",
-  },
-  // Rest of the projects...
-  {
-    id: 2,
-    title: "RETHINK RAND",
-    company: "COAL STOVE PICTURES",
-    category: "Documentary",
-    image: "/placeholder.svg?height=400&width=600&text=RETHINK+RAND",
-    description: "An insightful documentary exploring economic perspectives and financial literacy in South Africa.",
-    year: "2022",
-    awards: ["Best Documentary"],
-    youtubeLink: "https://www.youtube.com/embed/LXb3EKWsInQ?autoplay=1",
-  },
-  
-  {
-    id: 2,
-    title: "RETHINK RAND",
-    company: "COAL STOVE PICTURES",
-    category: "Documentary",
-    image: "/placeholder.svg?height=400&width=600&text=RETHINK+RAND",
-    description: "An insightful documentary exploring economic perspectives and financial literacy in South Africa.",
-    year: "2022",
-    awards: ["Best Documentary"],
-    youtubeLink: "https://www.youtube.com/embed/LXb3EKWsInQ?autoplay=1", // Placeholder
-  },
- 
-  {
-    id: 4,
-    title: "PITCH BLACK",
-    company: "FASHIONABLE",
-    category: "TV Series",
-    image: "/placeholder.svg?height=400&width=600&text=PITCH+BLACK",
-    description: "A thrilling series that explores the darker side of human nature and moral complexities.",
-    year: "2022",
-    youtubeLink: "https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1", // Placeholder
-  },
-  {
-    id: 5,
-    title: "7 COLOURS",
-    company: "SEMAMO",
-    category: "TV Series",
-    image: "/placeholder.svg?height=400&width=600&text=7+COLOURS",
-    description: "A vibrant series celebrating diversity and the rich tapestry of South African culture.",
-    year: "2023",
-    youtubeLink: "https://www.youtube.com/embed/LXb3EKWsInQ?autoplay=1", // Placeholder
-  },
+
   {
     id: 6,
-    title: "ADAM HARRY 21 MEN",
-    company: "MOVING DREAMS STUDIOS",
-    category: "Feature Film",
-    image: "/placeholder.svg?height=400&width=600&text=ADAM+HARRY+21+MEN",
-    description: "An action-packed film featuring compelling characters and intense dramatic sequences.",
-    year: "2022",
-    youtubeLink: "https://www.youtube.com/embed/kf_dK86m84E?autoplay=1", // Placeholder
+    title: "Other",
+    company: "MOneo films",
+    category: "Corporate",
+    image: "/images/WhatsApp Image 2025-09-02 at 15.11.04_a5f91a65.jpg",    description: "Corporate video production.",
+    year: "2025",
+    youtubeLink: "https://www.youtube.com/embed/OQV3wWPN1cM?autoplay=1",
   },
  
   {
     id: 8,
-    title: "STANDBANK",
+    title: "Her Story International",
     company: "MONEO FILMS",
-    category: "Commercial",
-    image: "/placeholder.svg?height=400&width=600&text=STANDBANK",
-    description: "A professional commercial production showcasing financial services and community impact.",
-    year: "2023",
-    youtubeLink: "https://www.youtube.com/embed/LXb3EKWsInQ?autoplay=1", // Placeholder
+    category: "Theatre show",
+    image: "/images/Screenshot 2025-09-03 224619.png",
+    description: "Corporate video production.",
+    youtubeLink: "https://www.youtube.com/embed/8kK0RvSZbCU?autoplay=1", // Placeholder
   },
-  {
-    id: 9,
-    title: "GIYANI LAND OF BLOOD S2",
-    company: "TSHEDZA PICTURES",
-    category: "TV Series",
-    image: "/placeholder.svg?height=400&width=600&text=GIYANI+S2",
-    description: "The second season of this gripping drama series set in rural South Africa.",
-    year: "2023",
-    youtubeLink: "https://www.youtube.com/embed/kf_dK86m84E?autoplay=1", // Placeholder
-  },
-  {
-    id: 10,
-    title: "LINGASHINI",
-    company: "STAINED GLASS TV",
-    category: "TV Series",
-    image: "/placeholder.svg?height=400&width=600&text=LINGASHINI",
-    description: "A captivating series exploring traditional values and modern challenges.",
-    year: "2022",
-    youtubeLink: "https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1", // Placeholder
-  },
-  {
-    id: 11,
-    title: "MZALI'WAMI S1",
-    company: "BRAINS AT WORK",
-    category: "TV Series",
-    image: "/placeholder.svg?height=400&width=600&text=MZALI'WAMI",
-    description: "A heartwarming series about family, tradition, and personal growth.",
-    year: "2022",
-    youtubeLink: "https://www.youtube.com/embed/LXb3EKWsInQ?autoplay=1", // Placeholder
-  },
-  {
-    id: 12,
-    title: "THE RIVER S1, 2 & 3",
-    company: "TSHEDZA PICTURES",
-    category: "TV Series",
-    image: "/placeholder.svg?height=400&width=600&text=THE+RIVER",
-    description: "A multi-season drama series that became a cornerstone of South African television.",
-    year: "2021-2023",
-    awards: ["Best Drama Series", "People's Choice Award"],
-    youtubeLink: "https://www.youtube.com/embed/kf_dK86m84E?autoplay=1", // Placeholder
-  },
-  {
-    id: 13,
-    title: "GOMORA S1",
-    company: "SERITI",
-    category: "TV Series",
-    image: "/placeholder.svg?height=400&width=600&text=GOMORA",
-    description: "A powerful drama series exploring life in South African townships.",
-    year: "2022",
-    awards: ["Outstanding Drama Series"],
-    youtubeLink: "https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1", // Placeholder
-  },
-  {
-    id: 14,
-    title: "ISIDINGO",
-    company: "ENDEMOL SOUTH AFRICA",
-    category: "TV Series",
-    image: "/placeholder.svg?height=400&width=600&text=ISIDINGO",
-    description: "A long-running soap opera that captured the hearts of South African audiences.",
-    year: "2020-2023",
-    youtubeLink: "https://www.youtube.com/embed/LXb3EKWsInQ?autoplay=1", // Placeholder
-  },
-  {
-    id: 15,
-    title: "GIYANE (LAND OF BLOOD) S1",
-    company: "TSHEDZA PICTURES",
-    category: "TV Series",
-    image: "/placeholder.svg?height=400&width=600&text=GIYANE+S1",
-    description: "The first season of this compelling drama series set in rural Limpopo.",
-    year: "2022",
-    youtubeLink: "https://www.youtube.com/embed/kf_dK86m84E?autoplay=1", // Placeholder
-  },
-  {
-    id: 16,
-    title: "AMALEGENDS",
-    company: "DOTI PRODUCTION",
-    category: "TV Series",
-    image: "/placeholder.svg?height=400&width=600&text=AMALEGENDS",
-    description: "A series celebrating legendary figures and their impact on South African culture.",
-    year: "2023",
-    youtubeLink: "https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1", // Placeholder
-  },
+  
+{
+  id: 17,
+  title: "The South African Cultural and Creative Industry Awards (CCIA)",
+  company: "Moneo films FILMS",
+  category: "Corporate",
+  image: "/images/WhatsApp Image 2025-09-02 at 17.15.01_4b737af5.jpg",
+  description: "corporate video production.",
+  youtubeLink: "https://www.youtube.com/embed/9pl6lo7hNMI?autoplay=1",
+},
+
   {
     id: 17,
-    title: "DISCOVERY COMMERCIALS",
-    company: "MQ FILMS",
-    category: "Commercial",
-    image: "/placeholder.svg?height=400&width=600&text=DISCOVERY",
-    description: "Professional commercial productions for the Discovery Channel network.",
+    title: "Standard Bank (Future Leaders Academy)",
+    company: "Moneo FILMS",
+    category: "Corporate",
+    image: "/images/WhatsApp Image 2025-09-02 at 16.56.35_23246850.jpg",
+    description: "Professional corporate productions.",
     year: "2022-2023",
-    youtubeLink: "https://www.youtube.com/embed/LXb3EKWsInQ?autoplay=1", // Placeholder
-  },
-  {
-    id: 18,
-    title: "KHETHA/ MINISTER OF EDUCATION",
-    company: "MONEO FILMS",
-    category: "Educational",
-    image: "/placeholder.svg?height=400&width=600&text=KHETHA",
-    description: "An educational production focusing on important social and political themes.",
-    year: "2023",
-    youtubeLink: "https://www.youtube.com/embed/kf_dK86m84E?autoplay=1", // Placeholder
-  },
-  {
-    id: 19,
-    title: "THE LITE SHOW S1",
-    company: "BURNT ONION",
-    category: "Talk Show",
-    image: "/placeholder.svg?height=400&width=600&text=THE+LITE+SHOW",
-    description: "A light-hearted talk show featuring celebrity interviews and entertainment.",
-    year: "2023",
-    youtubeLink: "https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1", // Placeholder
-  },
-  {
-    id: 20,
-    title: "THE F WORD",
-    company: "SOUL CITY INSTITUTE",
-    category: "Talk Show",
-    image: "/placeholder.svg?height=400&width=600&text=THE+F+WORD",
-    description: "A thought-provoking talk show addressing contemporary social issues.",
-    year: "2022",
-    youtubeLink: "https://www.youtube.com/embed/LXb3EKWsInQ?autoplay=1", // Placeholder
-  },
-  {
-    id: 21,
-    title: "LEBO MPHAMBILI MEDIA",
-    company: "BRIGHT FIRE PICTURES",
-    category: "Media Production",
-    image: "/placeholder.svg?height=400&width=600&text=LEBO+MPHAMBILI",
-    description: "Professional media production services and content creation.",
-    year: "2023",
-    youtubeLink: "https://www.youtube.com/embed/kf_dK86m84E?autoplay=1", // Placeholder
-  },
-  {
-    id: 22,
-    title: "MIRIAM MAKEBA FOUNDATION",
-    company: "MIRIAM MAKEBA",
-    category: "Documentary",
-    image: "/placeholder.svg?height=400&width=600&text=MIRIAM+MAKEBA",
-    description: "A documentary celebrating the life and legacy of the legendary Miriam Makeba.",
-    year: "2022",
-    awards: ["Best Biographical Documentary"],
-    youtubeLink: "https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1", // Placeholder
-  },
-  {
-    id: 23,
-    title: "MY SEXUALITY MY PRIDE",
-    company: "MONEO FILMS",
-    category: "Documentary",
-    image: "/placeholder.svg?height=400&width=600&text=MY+SEXUALITY",
-    description: "A powerful documentary exploring LGBTQ+ experiences and pride in South Africa.",
-    year: "2023",
-    awards: ["Social Impact Award"],
-    youtubeLink: "https://www.youtube.com/embed/LXb3EKWsInQ?autoplay=1", // Placeholder
-  },
-  {
-    id: 24,
-    title: "NOT ON MY WATCH DARLINGTON",
-    company: "OBONYE MEDIA",
-    category: "TV Series",
-    image: "/placeholder.svg?height=400&width=600&text=NOT+ON+MY+WATCH",
-    description: "A drama series featuring compelling characters and social commentary.",
-    year: "2022",
-    youtubeLink: "https://www.youtube.com/embed/kf_dK86m84E?autoplay=1", // Placeholder
-  },
-  {
-    id: 25,
-    title: "MICHAELS",
-    company: "OBONYE MEDIA",
-    category: "TV Series",
-    image: "/placeholder.svg?height=400&width=600&text=MICHAELS",
-    description: "A character-driven series exploring family dynamics and personal relationships.",
-    year: "2023",
-    youtubeLink: "https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1", // Placeholder
-  },
-  {
-    id: 26,
-    title: "RHYTHM CITY",
-    company: "QUIZZICAL PICTURES",
-    category: "TV Series",
-    image: "/placeholder.svg?height=400&width=600&text=RHYTHM+CITY",
-    description: "A popular soap opera set in the vibrant world of South African music industry.",
-    year: "2020-2023",
-    youtubeLink: "https://www.youtube.com/embed/LXb3EKWsInQ?autoplay=1", // Placeholder
-  },
-  {
-    id: 27,
-    title: "HOW TO RUIN CHRISTMAS S3",
-    company: "BURNT ONION",
-    category: "TV Series",
-    image: "/placeholder.svg?height=400&width=600&text=HOW+TO+RUIN+CHRISTMAS",
-    description: "The third season of this beloved comedy series about family holiday chaos.",
-    year: "2023",
-    awards: ["Best Comedy Series"],
-    youtubeLink: "https://www.youtube.com/embed/kf_dK86m84E?autoplay=1", // Placeholder
-  },
-  {
-    id: 28,
-    title: "ENTANGLEMENT",
-    company: "BURNT ONION",
-    category: "Feature Film",
-    image: "/placeholder.svg?height=400&width=600&text=ENTANGLEMENT",
-    description: "A complex drama exploring relationships and emotional connections.",
-    year: "2022",
-    youtubeLink: "https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1", // Placeholder
-  },
-  {
-    id: 29,
-    title: "LITHAPO",
-    company: "QUIZZICAL PICTURES",
-    category: "TV Series",
-    image: "/placeholder.svg?height=400&width=600&text=LITHAPO",
-    description: "A compelling series that delves into contemporary South African life.",
-    year: "2023",
-    youtubeLink: "https://www.youtube.com/embed/LXb3EKWsInQ?autoplay=1", // Placeholder
+    youtubeLink: "https://www.youtube.com/embed/svqSKFBrY70?autoplay=1", // Placeholder
   },
 
   {
-    id: 31,
-    title: "THOLA S1",
-    company: "FUZEBOX",
-    category: "TV Series",
-    image: "/placeholder.svg?height=400&width=600&text=THOLA",
-    description: "A gripping series that captivated audiences with its unique storytelling.",
-    year: "2023",
-    youtubeLink: "https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1", // Placeholder
+    id: 22,
+    title: "Enos Documentary Trailer 1",
+    company: "Moneo films",
+    category: "Documentary",
+    image: "/images/WhatsApp Image 2025-09-02 at 16.11.22_66be5478.jpg",
+    description: "Our stories.",
+    year: "2025",
+    youtubeLink: "https://www.youtube.com/embed/gOJY0wClVkM?autoplay=1", // Placeholder
   },
   {
-    id: 32,
-    title: "SOKHULU & PARTNERS S2",
-    company: "PENGUIN FILMS",
-    category: "TV Series",
-    image: "/placeholder.svg?height=400&width=600&text=SOKHULU+PARTNERS",
-    description: "The second season of this legal drama series.",
-    year: "2022",
-    youtubeLink: "https://www.youtube.com/embed/LXb3EKWsInQ?autoplay=1", // Placeholder
+    id: 23,
+    title: "From one woman to another",
+    company: "MONEO FILMS",
+    category: "Documentary",
+    image: "/images/WhatsApp Image 2025-09-02 at 16.47.02_dbf1b421.jpg",
+    description: "A powerful documentary exploring LGBTQ+ experiences and pride in South Africa.",
+    year: "2024",
+    youtubeLink: "https://www.youtube.com/embed/xeqd6FMOclQ?autoplay=1", // Placeholder
   },
+
   {
     id: 33,
-    title: "HOME AFFAIRS",
-    company: "PENGUIN FILMS",
-    category: "TV Series",
-    image: "/placeholder.svg?height=400&width=600&text=HOME+AFFAIRS",
+    title: "Theatre Reel",
+    company: "Moneo FILMS",
+    category: "Theatre show",
+    image: "/images/WhatsApp Image 2025-09-02 at 15.52.00_880422b8.jpg",
     description: "A series exploring bureaucracy and human stories within government institutions.",
     year: "2023",
-    youtubeLink: "https://www.youtube.com/embed/kf_dK86m84E?autoplay=1", // Placeholder
+    youtubeLink: "https://www.youtube.com/embed/4wDdXs4O-xU?autoplay=1", // Placeholder
   },
-  {
-    id: 34,
-    title: "KE MANG/ WHO AM I",
-    company: "PENGUIN FILMS",
-    category: "TV Series",
-    image: "/placeholder.svg?height=400&width=600&text=KE+MANG",
-    description: "A thought-provoking series about identity and self-discovery.",
-    year: "2022",
-    youtubeLink: "https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1", // Placeholder
-  },
+ {
+  id: 34,
+  title: "Segopotso",
+  company: "Moneo films",
+  category: "Feature Film",
+  image: "/images/WhatsApp Image 2025-09-02 at 15.54.24_ab3c91ff.jpg",
+  description: "A beautiful film.",
+  year: "2023",
+  youtubeLink: "https://www.youtube.com/embed/pcBixqIjyhg?autoplay=1" // Placeholder link
+}
  
 
   // ... (keep all other projects in the original order)
@@ -412,11 +142,10 @@ const categories = [
   "TV Series",
   "Documentary",
   "Feature Film",
-  "Commercial",
-  "Talk Show",
-  "Educational",
-  "Media Production",
+  "Corporate",  // updated from Commercial
+  "Theatre show",
 ];
+
 
 const getCategoryIcon = (category: string) => {
   switch (category) {
@@ -426,7 +155,7 @@ const getCategoryIcon = (category: string) => {
       return <Award className="w-4 h-4" />;
     case "Feature Film":
       return <Play className="w-4 h-4" />;
-    case "Commercial":
+    case "Corporate":
       return <Building2 className="w-4 h-4" />;
     default:
       return <Film className="w-4 h-4" />;
@@ -487,16 +216,6 @@ export default function PortfolioPage() {
     : filteredAndSortedProjects.slice(0, 4);
   const hasMoreProjects = filteredAndSortedProjects.length > 3;
 
-  const stats = [
-    { label: "Productions", value: "35+", icon: <Film className="w-6 h-6" /> },
-    {
-      label: "Production Companies",
-      value: "15+",
-      icon: <Building2 className="w-6 h-6" />,
-    },
-    { label: "Categories", value: "8", icon: <Filter className="w-6 h-6" /> },
-    { label: "Since", value: "2018", icon: <Calendar className="w-6 h-6" /> },
-  ];
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -590,43 +309,63 @@ export default function PortfolioPage() {
           </motion.p>
         </div>
       </section>
-
-      {/* Stats Section */}
-      <section className="py-16 px-4 border-y" style={{ borderColor: burntOrange }}>
-        <div className="max-w-7xl mx-auto">
-          <motion.div
-            className="grid grid-cols-2 md:grid-cols-4 gap-8"
-            variants={containerVariants}
-            initial="hidden"
-            animate="visible"
+            {/* Stats Section */}
+<section className="py-16 px-4 border-y" style={{ borderColor: burntOrange }}>
+  <div className="max-w-7xl mx-auto">
+    <motion.div
+      className="grid grid-cols-2 md:grid-cols-4 gap-8"
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+    >
+      {[
+        { label: "Productions", value: projects.length, icon: <Film className="w-6 h-6" /> },
+        { 
+          label: "Production Companies", 
+          value: Array.from(new Set(projects.map(p => p.company))).length, 
+          icon: <Building2 className="w-6 h-6" /> 
+        },
+        { 
+          label: "Categories", 
+          value: Array.from(new Set(projects.map(p => p.category))).length, 
+          icon: <Filter className="w-6 h-6" /> 
+        },
+        { 
+          label: "Since", 
+          value: (() => {
+            const years = projects
+              .map(p => p.year)
+              .filter(Boolean)
+              .map(y => parseInt(y!, 10));
+            return years.length > 0 ? Math.min(...years) : new Date().getFullYear();
+          })(),
+          icon: <Calendar className="w-6 h-6" /> 
+        },
+      ].map((stat) => (
+        <motion.div key={stat.label} variants={itemVariants} className="text-center group">
+          <div
+            className="rounded-2xl p-6 border transition-all duration-300 group-hover:bg-[#fff]/10"
+            style={{
+              background: `${deepBlue}CC`,
+              border: `1.5px solid ${blueAccent}99`,
+            }}
           >
-            {stats.map((stat, index) => (
-              <motion.div key={stat.label} variants={itemVariants} className="text-center group">
-                <div
-                  className="rounded-2xl p-6 border transition-all duration-300 group-hover:bg-[#fff]/10"
-                  style={{
-                    background: `${deepBlue}CC`,
-                    border: `1.5px solid ${blueAccent}99`,
-                  }}
-                >
-                  <div className="flex justify-center mb-4" style={{ color: blueAccent }}>
-                    {stat.icon}
-                  </div>
-                  <div
-                    className="text-3xl md:text-4xl font-bold mb-2"
-                    style={{ color: "#fff" }}
-                  >
-                    {stat.value}
-                  </div>
-                  <div className="text-lg" style={{ color: blueAccent }}>
-                    {stat.label}
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </motion.div>
-        </div>
-      </section>
+            <div className="flex justify-center mb-4" style={{ color: blueAccent }}>
+              {stat.icon}
+            </div>
+            <div className="text-3xl md:text-4xl font-bold mb-2" style={{ color: "#fff" }}>
+              {stat.value}
+            </div>
+            <div className="text-lg" style={{ color: blueAccent }}>
+              {stat.label}
+            </div>
+          </div>
+        </motion.div>
+      ))}
+    </motion.div>
+  </div>
+</section>
+
 
       {/* Controls Section */}
       <section className="py-8 px-4" style={{ background: `${deepBlue}CC` }}>

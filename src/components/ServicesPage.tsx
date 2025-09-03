@@ -234,7 +234,7 @@ const ServicesPage = () => {
             </p>
             <div className="space-y-4 max-w-md mx-auto">
               <a 
-                href="mailto:production@moneofilms.co.za" 
+                href="mailto:info@moneofilms.co.za" 
                 className="block font-light py-4 px-8 rounded transition-colors duration-300"
                 style={{
                   background: colors.accentOrange,
@@ -242,7 +242,7 @@ const ServicesPage = () => {
                   boxShadow: colors.cardShadow
                 }}
               >
-                production@moneofilms.co.za
+                info@moneofilms.co.za
               </a>
               <a 
                 href="tel:+27677662899" 
