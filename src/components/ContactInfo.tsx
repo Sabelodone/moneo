@@ -8,13 +8,12 @@ export default function ContactSection() {
     subject: "",
     message: "",
   });
-
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
-  // Validation function
+  // Validation
   const validate = () => {
     const errs: { [key: string]: string } = {};
     if (!form.name.trim()) errs.name = "Name is required";
@@ -25,12 +24,10 @@ export default function ContactSection() {
     return errs;
   };
 
-  // Handle input changes
   const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  // Handle form submission
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     const errs = validate();
@@ -42,16 +39,12 @@ export default function ContactSection() {
       setLoading(true);
       try {
         const response = await fetch("/api/send-email", {
-                         method: "POST",
-                         headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify(form),
-                     });
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(form),
+        });
 
-
-        if (!response.ok) {
-          throw new Error(`Server responded with status ${response.status}`);
-        }
-
+        if (!response.ok) throw new Error(`Server responded with status ${response.status}`);
         const result = await response.json();
 
         if (result.success) {
@@ -62,7 +55,6 @@ export default function ContactSection() {
           setErrorMessage(result.error || "Failed to send email");
         }
       } catch (err: any) {
-        console.error(err);
         setErrorMessage(
           err.message.includes("Failed to fetch")
             ? "Cannot connect to the server. Please try again later."
@@ -75,13 +67,13 @@ export default function ContactSection() {
   };
 
   return (
-    <section className="relative bg-gradient-to-br from-[#FFF8F0] via-[#F5E6D8] to-[#FFF8F0] text-[#2A1A12] py-20 px-6 lg:px-20 overflow-hidden font-sans">
-      {/* Animated background */}
+    <section className="relative bg-gradient-to-br from-[#FFF8F0] via-[#F5E6D8] to-[#FFF8F0] text-[#2A1A12] py-16 px-6 sm:px-12 lg:px-20 overflow-hidden font-sans">
+      {/* Background animations */}
       <div className="absolute inset-0 -z-10 opacity-20 animate-flicker bg-gradient-radial from-[#CC5500]/30 via-transparent to-[#FFF8F0]"></div>
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-tr from-[#CC5500]/15 via-[#FFF8F0]/75 to-[#FFF8F0]/90 mix-blend-overlay"></div>
 
-      <div className="relative max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center">
-        {/* Left image */}
+      <div className="relative max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+        {/* Image */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -95,39 +87,38 @@ export default function ContactSection() {
             alt="Cinematic Adventure"
             className="w-full h-full object-cover transform hover:scale-105 transition-transform duration-800 ease-in-out"
             loading="lazy"
-            style={{ minHeight: '600px' }}
+            style={{ minHeight: "300px", maxHeight: "600px" }}
           />
         </motion.div>
 
-        {/* Right: Text + form */}
+        {/* Form + Text */}
         <motion.div
           initial={{ opacity: 0, x: 40 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 1, delay: 0.3, ease: "easeOut" }}
-          aria-label="Contact form section"
           className="h-full flex flex-col justify-center"
         >
-          <h2 className="text-5xl font-thin tracking-[0.35em] uppercase mb-8 drop-shadow-[0_2px_6px_rgba(204,85,0,0.4)]">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-thin tracking-[0.2em] sm:tracking-[0.35em] uppercase mb-6 sm:mb-8 drop-shadow-[0_2px_6px_rgba(204,85,0,0.4)]">
             Embark On The Adventure
           </h2>
 
-          <p className="mb-4 font-light text-[#CC5500] text-lg leading-relaxed tracking-wide">
+          <p className="mb-4 font-light text-[#CC5500] text-base sm:text-lg leading-relaxed tracking-wide">
             To embark on an extraordinary journey with <strong>Moneo Films</strong>, reach out to us today.
           </p>
 
-          <p className="mb-8 font-light text-[#2A1A12]/80 text-md tracking-wider">
+          <p className="mb-6 sm:mb-8 font-light text-[#2A1A12]/80 text-sm sm:text-md tracking-wider">
             <span className="block">Monday - Friday: <strong>09:00 - 17:00</strong></span>
             <span className="block">Saturday: <strong>09:00 - 13:00</strong></span>
           </p>
 
-          <p className="mb-10 font-light text-[#2A1A12]/70 leading-relaxed tracking-wide">
-            Contact us via email, phone, or visit our website and social media handles.
+          <p className="mb-6 sm:mb-10 font-light text-[#2A1A12]/70 leading-relaxed tracking-wide text-sm sm:text-base">
+            Contact us via email, phone, or visit our website.
             <br />
-            <span className="block mt-3 text-lg font-semibold tracking-tight">+27 67 766 2899</span>
+            <span className="block mt-2 text-base sm:text-lg font-semibold tracking-tight">+27 67 766 2899</span>
             <a
               href="mailto:info@moneofilms.co.za"
-              className="inline-block mt-2 underline text-[#CC5500] hover:text-[#E05C00] transition-colors"
+              className="inline-block mt-1 underline text-[#CC5500] hover:text-[#E05C00] transition-colors"
             >
               info@moneofilms.co.za
             </a>
@@ -142,8 +133,7 @@ export default function ContactSection() {
             </a>
           </p>
 
-          {/* Form */}
-          <form onSubmit={handleSubmit} noValidate className="space-y-6">
+          <form onSubmit={handleSubmit} noValidate className="space-y-4 sm:space-y-6">
             {["name", "email", "subject"].map((field) => (
               <FloatingInput
                 key={field}
@@ -169,10 +159,9 @@ export default function ContactSection() {
             <button
               type="submit"
               disabled={loading}
-              className={`relative inline-block bg-[#CC5500] hover:bg-[#E05C00] text-[#FFF8F0] uppercase font-semibold tracking-widest px-12 py-4 rounded shadow-lg transition duration-300 ease-in-out overflow-hidden focus:outline-none focus:ring-4 focus:ring-[#CC5500] focus:ring-opacity-70 ${
+              className={`relative inline-block bg-[#CC5500] hover:bg-[#E05C00] text-[#FFF8F0] uppercase font-semibold tracking-widest px-8 sm:px-12 py-3 sm:py-4 rounded shadow-lg transition duration-300 ease-in-out overflow-hidden focus:outline-none focus:ring-4 focus:ring-[#CC5500] focus:ring-opacity-70 ${
                 loading ? "opacity-50 cursor-not-allowed" : ""
               }`}
-              aria-label="Submit contact form"
             >
               <span className="relative z-10">{loading ? "Sending..." : "Drop Us A Line"}</span>
               <span className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-[#E05C00] via-[#CC5500] to-[#E05C00] opacity-25 animate-gradient-x rounded"></span>
@@ -185,7 +174,7 @@ export default function ContactSection() {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: 10 }}
                   transition={{ duration: 0.5 }}
-                  className="text-green-600 font-light text-lg mt-4"
+                  className="text-green-600 font-light text-sm sm:text-lg mt-4"
                   role="alert"
                 >
                   Thank you for reaching out! We will get back to you soon.
@@ -197,7 +186,7 @@ export default function ContactSection() {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: 10 }}
                   transition={{ duration: 0.5 }}
-                  className="text-red-500 font-light text-lg mt-4"
+                  className="text-red-500 font-light text-sm sm:text-lg mt-4"
                   role="alert"
                 >
                   {errorMessage}
@@ -208,7 +197,6 @@ export default function ContactSection() {
         </motion.div>
       </div>
 
-      {/* Animations CSS */}
       <style>{`
         @keyframes gradient-x {
           0%, 100% { background-position: 0% center; }
@@ -230,8 +218,7 @@ export default function ContactSection() {
   );
 }
 
-// Floating input and textarea components remain unchanged from your original code
-
+// ---------- Floating Input & Textarea ----------
 function FloatingInput({
   label,
   name,
