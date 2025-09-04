@@ -25,7 +25,7 @@ const teamMembers: TeamMember[] = [
     id: 1,
     name: "Ferry Jele",
     role: "Co-Founder & Creative Director",
-    bio: "Visionary leader with over 15 years in film production. Ferry's passion for storytelling and commitment to excellence drives Moneo Films' creative vision.",
+    bio: "Visionary leader with over 28 years in film production. Ferry's passion for storytelling and commitment to excellence drives Moneo Films' creative vision.",
     image: "/images/IWII9j7j_400x400.jpg",
     social: { linkedin: "#", email: "ferry@moneofilms.co.za", twitter: "#" },
     works: ["The River (Director)", "How to Ruin Christmas (Director)", "SAFTA Winner for Directing", "Fatal Seduction (Creative Direction)", "Scandal (Production Team)"],
