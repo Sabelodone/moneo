@@ -21,21 +21,21 @@ const ServicesPage = () => {
       title: "Film Production",
       icon: <Film style={{ color: colors.accentOrange }} className="w-8 h-8" />,
       description: "End-to-end film production services from concept to final cut, specializing in dramatic storytelling and cinematic visuals.",
-      highlights: ["Feature Films", "Short Films", "Cinematic Storytelling"],
+      highlights: ["Feature Films", "Short Films", "Cinematic Storytelling", "Corporate", "Documentaries"],
       image: "/images/image1 (1).jpeg",
     },
     {
       title: "Cinematography",
       icon: <Camera style={{ color: colors.accentOrange }} className="w-8 h-8" />,
       description: "Award-winning cinematography services that bring your vision to life with stunning visual narratives.",
-      highlights: ["Director of Photography", "Camera Operation", "Lighting Design"],
+      highlights: ["Director of Photography", "Camera Operation", "Gaffer", "Grips", "Wardrobe", "Makeup", "Production", "Casting Director", "Sound Mixer"],
       image: "/images/image4.jpeg",
     },
     {
       title: "TV Production",
       icon: <Monitor style={{ color: colors.accentOrange }} className="w-8 h-8" />,
       description: "Complete television production including telenovelas, dramas, and reality shows with proven success.",
-      highlights: ["The River", "How to Ruin Christmas", "Fatal Seduction"],
+      highlights: ["From one woman to another", "Her Story International", "Adam Harry 21 MEN", "Segopotso"],
       image: "/images/image24.jpeg"
     },
     {
@@ -62,9 +62,9 @@ const ServicesPage = () => {
   ];
 
   const awards = [
+    "International Emmy Awards Nominee",
     "SAFTA Winner - Best Directing Team",
     "SAFTA Nominee - Supporting Actress",
-    "International Emmy Awards Nominee"
   ];
 
   return (

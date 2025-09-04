@@ -426,10 +426,42 @@ const AboutPage: React.FC = () => {
                   <span className="block" style={{ color: colors.accentOrange, textShadow: `0 2px 16px ${colors.accentGold}` }}>STORY</span>
                 </h2>
                 <div className="space-y-6 font-netflix text-lg" style={{ color: colors.textDark, opacity: 0.8, lineHeight: "1.7" }}>
-                  <p>Founded in 2018, Moneo Films is a trailblazing production company owned entirely by black women. We specialize in producing remarkable films, documentaries, series, and other television products.</p>
-                  <p>Led by our visionary co-founders, Ferry Jele and Neo R Paulus, we push boundaries and redefine storytelling.</p>
-                  <p>At Moneo Films, we are more than just a production company - we are an all-encompassing entertainment and administration office. Our team of experts excels in producing and technical producing, script development,Editing, directing, cinematography, performance coaching, dialogue coaching, Web and App development and more.</p>
-                  <p>We provide a comprehensive range of services and equipment, ensuring excellence in every aspect of production.</p>
+                 <p>
+        <strong>Our Story</strong>
+      </p>
+
+      <p>
+        Founded in 2018, <strong>Moneo Films</strong> is a trailblazing, Black-women-owned production company rooted in purpose, passion, and creative excellence. Co-founded by visionary industry leaders <strong>Ferry Jele</strong> and <strong>Neo R Paulus</strong>, we are on a mission to push boundaries and redefine storytelling across Africa and beyond.
+      </p>
+
+      <p>
+        We specialize in producing high-impact films, documentaries, series, and a wide range of television content — but we are more than just a production company. Moneo Films is a fully integrated entertainment and administration hub, offering end-to-end solutions that bring stories to life with precision and heart.
+      </p>
+
+      <p>
+        Our team consists of skilled professionals who bring their expertise to every stage of production, including:
+      </p>
+
+      <p>• Producing & Technical Producing</p>
+      <p>• Script Development</p>
+      <p>• Directing</p>
+      <p>• Cinematography</p>
+      <p>• Performance & Dialogue Coaching</p>
+      <p>• Technical Support</p>
+      <p>• Editing</p>
+      <p>• Web & App Development</p>
+
+      <p>
+        We also believe deeply in uplifting others through training and mentorship. Over the years, we have provided free training and development opportunities to aspiring creatives — not for recognition or financial gain, but to empower the next generation of storytellers and ensure their success in the industry.
+      </p>
+
+      <p>
+        At Moneo Films, we are building more than productions — we are building a legacy. One grounded in excellence, collaboration, and transformation through storytelling.
+      </p>
+
+      <p>
+        We pride ourselves on delivering excellence in every frame, every performance, and every experience. At Moneo Films, storytelling is not just what we do — it’s <em>who we are</em>.
+      </p>
                 </div>
               </div>
             </motion.div>

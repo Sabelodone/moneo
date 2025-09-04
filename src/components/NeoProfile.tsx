@@ -15,36 +15,37 @@ const NeoProfile: React.FC = () => {
     {
       period: "2023 - 2025",
       roles: [
-        { position: "DOP Cinematographer / Co-Producer Director / DOP", production: "Scandal", company: "Ochre Moving Pictures", genre: "Soapy/Telenovela" },
-        { position: "Director of Photography / Cam Op / Director", production: "Rethink Rands", company: "Coal Stove Pictures", genre: "Feature Film" },
-        { position: "Director of Photography / Cam Op", production: "From One Woman to Another", company: "SOAS University of London / Moneo", genre: "Doccie Film" },
-        { position: "Director of Photography Director Producer", production: "7 Colours", company: "Kiwi Films", genre: "Reality" },
-        { position: "Cam Op", production: "Adam Marry Limen", company: "Semamo", genre: "Doccie Film" },
-        { position: "Director of Photography / Cam Op / Director", production: "Sola Sonke", company: "Moving Dreams Studios", genre: "Reality" },
-        { position: "Director of Photography", production: "Standard Bank", company: "Moneo Film", genre: "Corporate" },
+        { position: "DOP / Cinematographer", production: "Scandal", company: "Ochre Moving Pictures", genre: "Soapy/Telenovela" },
+        { position: "Director of Photography / Cinematographer", production: "Rethink Rands", company: "Coal Stove Pictures", genre: "Feature Film" },
+        { position: "Cam Op", production: "Soweto Love Story", company: "Pitch Black", genre: "Promo (Netflix)" },
+        { position: "Technical Producer / Director of Photography", production: "The Orbit With Dineo", company: "Kiwi Films", genre: "Reality" },
+        { position: "Technical producer / co-producer, Director of Photography / Cinematographer", production: "From One Woman to Another", company: "SOAS University of London / Moneo", genre: "Doccie Film" },
+        { position: "Director of Photography/Cam Op", production: "7 Colours", company: "Semamo Productions", genre: "Reality" },
+        { position: "Co-producer / Technical Producer / Director of Photography / Director", production: "Adam Harry 21 MEN", company: "Moving Dreams Studios", genre: "Doccie Film" },
+        { position: "Cam Op", production: "S'jola Sonke", company: "Bright Fire", genre: "Reality" },
+        { position: "Producer / DOP", production: "Standard Bank", company: "Moneo Film", genre: "Corporate" },
         { position: "Cam Op", production: "Stop Violence 'Gainst Iman", company: "Moving Dreams Studios", genre: "Promo" },
       ],
     },
     {
-      period: "2016 - 2022",
+      period: "2022 - 2023",
       roles: [
         { position: "Director of Photography", production: "The Estate", company: "Clive Morris", genre: "Telenovela" },
         { position: "Camera Operator", production: "Giyani (Land of Blood) S2", company: "Tshedza Pictures", genre: "Telenovela" },
-        { position: "Loader Camera Operator", production: "Lincashini", company: "In Brains at Work", genre: "Telenovela" },
-        { position: "Camera Assistance", production: "Mzali'Wami S1", company: "Tshedza Pictures", genre: "Drama" },
-        { position: "Camera Assistance / Loader", production: "The River S1, 2 & 3", company: "Endemol South Africa", genre: "Telenovela" },
-        { position: "Camera Assistance / Loader", production: "Gomora ST", company: "Tshedza Pictures", genre: "Soap" },
-        { position: "Camera Assistance", production: "Isidingo", company: "Velonovela", genre: "Soap" },
+        { position: "Loader / Camera Operator", production: "Lingashoni", company: "Stain Glass", genre: "Telenovela" },
+        { position: "Camera Assistance / Loader", production: "Mzali'Wami S1", company: "Brains At Work", genre: "Drama" },
+        { position: "Camera Assistance / Loader", production: "The River S1, 2 & 3", company: "Tshedza Pictures", genre: "Telenovela" },
+        { position: "Camera Assistance / Loader", production: "Gomora ST S1", company: "Serite", genre: "Telenovela" },
       ],
     },
     {
       period: "2012 - 2018",
       roles: [
-        { position: "Director of Photography", production: "Miriam Makeba Foundation", company: "Agogo Ayo", genre: "Reality Show" },
-        { position: "Camera Assistance", production: "Isidingo", company: "Endemol South Africa Moneo", genre: "Soapy" },
-        { position: "Director of Photography", production: "My Sexuality My Orids", company: "Milms", genre: "Reality" },
-        { position: "Director Camera Operator", production: "Not on My Watch Darlington", company: "Obonye Media", genre: "Drama" },
-        { position: "Camera Operator", production: "Michaels", company: "Obonye Media", genre: "Documentary" },
+        { position: "Director of Photography / Producer", production: "Miriam Makeba Foundation", company: "Moneo Films", genre: "Theatre Show" },
+        { position: "Camera Assistance", production: "Isidingo", company: "Endemol South Africa", genre: "Soapy" },
+        { position: "Producer / Director of Photography", production: "My Sexuality My Pride", company: "Moneo Films", genre: "Doccie Film" },
+        { position: "Camera Operator", production: "Not on My Watch", company: "Obonye Media", genre: "Drama" },
+        { position: "Camera Operator", production: "Darlington Michaels", company: "Obonye Media", genre: "Documentary" },
       ],
     },
     {
@@ -61,17 +62,6 @@ const NeoProfile: React.FC = () => {
     },
   ];
 
-  const references = [
-    { name: "Sanele Zulu", production: "SCANDAL", contact: "+27 79 695 8648" },
-    { name: "Natalie Prinsloo", production: "SCANDAL", contact: "+27 82 490 1957" },
-    { name: "Pelisa Norman", production: "Soweto Love Story", contact: "+27 82 863 3461" },
-    { name: "Dineo Lusenga", production: "The Orbit with Dineo", contact: "+27 76 058 5162" },
-    { name: "Mda Ramphoma", production: "7 Colours", contact: "+27 66 105 4192" },
-    { name: "Amber", production: "The River S1,2&3", contact: "+27 67 145 9882" },
-    { name: "Florence Masebe", production: "Kheta - Higher Education", contact: "+27 82 560 8043 / +27 71 482 9870" },
-    { name: "Ferry Jele", production: "Moneo Films", contact: "+27 72 776 7597" },
-    { name: "Koketso Mojela", production: "Hero Pilot Xikulu Media", contact: "+27 81 708 7535" },
-  ];
 
   const fadeInUp = {
     hidden: { opacity: 0, y: 30 },
@@ -142,23 +132,7 @@ const NeoProfile: React.FC = () => {
           ))}
         </div>
 
-        {/* References Section */}
-        <div className="mt-16">
-          <h2 className="text-3xl font-semibold mb-8 text-[#C75B12] border-b-2 border-[#C75B12] pb-2">References</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {references.map((ref, idx) => (
-              <motion.div
-                key={idx}
-                whileHover={{ scale: 1.03 }}
-                className="bg-[#FFF8F0] shadow-lg rounded-2xl p-6 border-l-4 border-[#C75B12] h-full transition-all duration-300"
-              >
-                <h3 className="text-xl font-semibold mb-2 text-[#8C3E08]">{ref.name}</h3>
-                <p><span className="font-medium text-[#C75B12]">Production:</span> {ref.production}</p>
-                <p><span className="font-medium text-[#C75B12]">Contact:</span> {ref.contact}</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
+      
 
         {/* Contact Section */}
         <div className="mt-16">
