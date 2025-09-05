@@ -14,18 +14,6 @@ const FerryProfile: React.FC = () => {
   // Portfolio Data
   const portfolioData = [
     {
-      period: "2011 – 2022",
-      roles: [
-        { position: "Dialogue/Performance Coach", production: "The River", company: "Tshedza Pictures", genre: "Telenovela" },
-        { position: "Dialogue/Performance Coach", production: "Rhythm City", company: "Quizzical Pictures", genre: "Soapy" },
-        { position: "Dialogue/Performance Coach", production: "Saints and Sinners S1", company: "Penguin Films", genre: "Drama" },
-        { position: "Dialogue/Performance Coach", production: "Sokhulu & Partners S2", company: "Penguin Films", genre: "Drama" },
-        { position: "Dialogue/Performance Coach", production: "Thola S1", company: "FuzeBox", genre: "Drama" },
-        { position: "Dialogue Coach", production: "Home Affairs", company: "Penguin Films", genre: "Drama" },
-        { position: "Dialogue & Content Advisor", production: "Ke Mang / Who Am I", company: "Penguin Films", genre: "Documentary" },
-      ],
-    },
-    {
       period: "2007 – 2017",
       roles: [
         { position: "Translator", production: "Scandal", company: "Ochre Media", genre: "Series" },
@@ -39,6 +27,19 @@ const FerryProfile: React.FC = () => {
         { position: "Director", production: "Saints & Sinners S1", company: "Penguin Films", genre: "Drama Ep 6" },
         { position: "Director", production: "Thola S1", company: "FuzeBox", genre: "Drama Ep 10" },
         { position: "Director", production: "Sokhulu & Partners S2", company: "Penguin Films", genre: "Drama / Various SCS" },
+      ],
+      
+    },
+    {
+      period: "2011 – 2022",
+      roles: [
+        { position: "Dialogue/Performance Coach", production: "The River", company: "Tshedza Pictures", genre: "Telenovela" },
+        { position: "Dialogue/Performance Coach", production: "Rhythm City", company: "Quizzical Pictures", genre: "Soapy" },
+        { position: "Dialogue/Performance Coach", production: "Saints and Sinners S1", company: "Penguin Films", genre: "Drama" },
+        { position: "Dialogue/Performance Coach", production: "Sokhulu & Partners S2", company: "Penguin Films", genre: "Drama" },
+        { position: "Dialogue/Performance Coach", production: "Thola S1", company: "FuzeBox", genre: "Drama" },
+        { position: "Dialogue Coach", production: "Home Affairs", company: "Penguin Films", genre: "Drama" },
+        { position: "Dialogue & Content Advisor", production: "Ke Mang / Who Am I", company: "Penguin Films", genre: "Documentary" },
       ],
     },
   ];

@@ -46,7 +46,6 @@ const projects: Project[] = [
     category: "TV Series",
     image: "/images/image9.jpeg",
     description: "A gripping drama series that captivated audiences with its compelling storylines and exceptional performances.",
-    year: "2025",
     youtubeLink: "https://www.youtube.com/embed/gvpxpNQKdPk?autoplay=1",
   },
 
@@ -56,7 +55,6 @@ const projects: Project[] = [
     company: "MOneo films",
     category: "Corporate",
     image: "/images/WhatsApp Image 2025-09-02 at 15.11.04_a5f91a65.jpg",    description: "Corporate video production.",
-    year: "2025",
     youtubeLink: "https://www.youtube.com/embed/OQV3wWPN1cM?autoplay=1",
   },
  
@@ -87,7 +85,6 @@ const projects: Project[] = [
     category: "Corporate",
     image: "/images/WhatsApp Image 2025-09-02 at 16.56.35_23246850.jpg",
     description: "Professional corporate productions.",
-    year: "2022-2023",
     youtubeLink: "https://www.youtube.com/embed/svqSKFBrY70?autoplay=1", // Placeholder
   },
 
@@ -98,7 +95,6 @@ const projects: Project[] = [
     category: "Documentary",
     image: "/images/WhatsApp Image 2025-09-02 at 16.11.22_66be5478.jpg",
     description: "Our stories.",
-    year: "2025",
     youtubeLink: "https://www.youtube.com/embed/gOJY0wClVkM?autoplay=1", // Placeholder
   },
   {
@@ -107,21 +103,10 @@ const projects: Project[] = [
     company: "MONEO FILMS",
     category: "Documentary",
     image: "/images/WhatsApp Image 2025-09-02 at 16.47.02_dbf1b421.jpg",
-    description: "A powerful documentary exploring LGBTQ+ experiences and pride in South Africa.",
-    year: "2024",
+    description: "From One Woman to Another: The Screen Worlds of Bongiwe Selane",
     youtubeLink: "https://www.youtube.com/embed/xeqd6FMOclQ?autoplay=1", // Placeholder
   },
 
-  {
-    id: 33,
-    title: "Theatre Reel",
-    company: "Moneo FILMS",
-    category: "Theatre show",
-    image: "/images/WhatsApp Image 2025-09-02 at 15.52.00_880422b8.jpg",
-    description: "A series exploring bureaucracy and human stories within government institutions.",
-    year: "2023",
-    youtubeLink: "https://www.youtube.com/embed/4wDdXs4O-xU?autoplay=1", // Placeholder
-  },
  {
   id: 34,
   title: "Segopotso",
@@ -129,7 +114,6 @@ const projects: Project[] = [
   category: "Feature Film",
   image: "/images/WhatsApp Image 2025-09-02 at 15.54.24_ab3c91ff.jpg",
   description: "A beautiful film.",
-  year: "2023",
   youtubeLink: "https://www.youtube.com/embed/pcBixqIjyhg?autoplay=1" // Placeholder link
 }
  
