@@ -38,7 +38,7 @@ export default function ContactSection() {
     if (Object.keys(errs).length === 0) {
       setLoading(true);
       try {
-        const response = await fetch("/api/send-email", {
+        const response = await fetch("https://www.moneofilms.co.za/api/send-email", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(form),
@@ -55,11 +55,13 @@ export default function ContactSection() {
           setErrorMessage(result.error || "Failed to send email");
         }
       } catch (err: any) {
-        setErrorMessage(
-          err.message.includes("Failed to fetch")
-            ? "Cannot connect to the server. Please try again later."
-            : `An error occurred: ${err.message}`
-        );
+        if (err.message.includes("ETIMEDOUT")) {
+          setErrorMessage("Email server timed out. Please try again later.");
+        } else if (err.message.includes("Failed to fetch")) {
+          setErrorMessage("Cannot connect to the server. Please try again later.");
+        } else {
+          setErrorMessage(`An error occurred: ${err.message}`);
+        }
       } finally {
         setLoading(false);
       }
@@ -74,24 +76,23 @@ export default function ContactSection() {
 
       <div className="relative max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
         {/* Image */}
-       <motion.div
-  initial={{ opacity: 0, y: 20 }}
-  whileInView={{ opacity: 1, y: 0 }}
-  viewport={{ once: true }}
-  transition={{ duration: 0.8, ease: "easeOut" }}
-  className="rounded-xl overflow-hidden shadow-[0_20px_40px_rgba(204,85,0,0.3)] border-2 border-[#CC5500] flex items-stretch h-full"
-  style={{ perspective: 900 }}
->
-  <img
-    src="/images/image6.jpeg"
-    alt="Cinematic Adventure"
-    className="w-full h-full object-cover transform hover:scale-105 transition-transform duration-800 ease-in-out rounded-xl"
-    loading="lazy"
-  />
-</motion.div>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="rounded-xl overflow-hidden shadow-[0_20px_40px_rgba(204,85,0,0.3)] border-2 border-[#CC5500] flex items-stretch h-full"
+          style={{ perspective: 900 }}
+        >
+          <img
+            src="/images/image6.jpeg"
+            alt="Cinematic Adventure"
+            className="w-full h-full object-cover transform hover:scale-105 transition-transform duration-800 ease-in-out rounded-xl"
+            loading="lazy"
+          />
+        </motion.div>
 
-
-        {/* Form + Text */}
+        {/* Form */}
         <motion.div
           initial={{ opacity: 0, x: 40 }}
           whileInView={{ opacity: 1, x: 0 }}
@@ -102,36 +103,6 @@ export default function ContactSection() {
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-thin tracking-[0.2em] sm:tracking-[0.35em] uppercase mb-6 sm:mb-8 drop-shadow-[0_2px_6px_rgba(204,85,0,0.4)]">
             Embark On The Adventure
           </h2>
-
-          <p className="mb-4 font-light text-[#CC5500] text-base sm:text-lg leading-relaxed tracking-wide">
-            To embark on an extraordinary journey with <strong>Moneo Films</strong>, reach out to us today.
-          </p>
-
-          <p className="mb-6 sm:mb-8 font-light text-[#2A1A12]/80 text-sm sm:text-md tracking-wider">
-            <span className="block">Monday - Friday: <strong>09:00 - 17:00</strong></span>
-            <span className="block">Saturday: <strong>09:00 - 13:00</strong></span>
-          </p>
-
-          <p className="mb-6 sm:mb-10 font-light text-[#2A1A12]/70 leading-relaxed tracking-wide text-sm sm:text-base">
-            Contact us via email, phone, or visit our website.
-            <br />
-            <span className="block mt-2 text-base sm:text-lg font-semibold tracking-tight">+27 67 766 2899</span>
-            <a
-              href="mailto:info@moneofilms.co.za"
-              className="inline-block mt-1 underline text-[#CC5500] hover:text-[#E05C00] transition-colors"
-            >
-              info@moneofilms.co.za
-            </a>
-            <br />
-            <a
-              href="https://www.moneofilms.co.za"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-block mt-1 underline text-[#CC5500] hover:text-[#E05C00] transition-colors"
-            >
-              www.moneofilms.co.za
-            </a>
-          </p>
 
           <form onSubmit={handleSubmit} noValidate className="space-y-4 sm:space-y-6">
             {["name", "email", "subject"].map((field) => (
