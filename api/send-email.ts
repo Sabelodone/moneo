@@ -23,13 +23,17 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     });
   }
 
+  // Use TLS on port 587 (Vercel does not allow 465)
   const transporter = nodemailer.createTransport({
     host: process.env.SMTP_HOST,
-    port: Number(process.env.SMTP_PORT),
-    secure: Number(process.env.SMTP_PORT) === 465,
+    port: 587,
+    secure: false, // TLS
     auth: {
       user: process.env.SMTP_USER,
       pass: process.env.SMTP_PASS,
+    },
+    tls: {
+      rejectUnauthorized: false, // optional, helps if your server has a self-signed cert
     },
   });
 
@@ -42,7 +46,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   `;
 
   try {
-    await transporter.sendMail({
+    const info = await transporter.sendMail({
       from: `"Website Contact" <${process.env.SMTP_USER}>`,
       to: process.env.SMTP_USER,
       subject: subject || 'New Contact Form Submission',
@@ -50,9 +54,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       replyTo: email,
     });
 
+    console.log('✅ Email sent:', info.messageId);
+
     return res.status(200).json({ success: true });
   } catch (error: any) {
-    console.error('❌ Email sending failed:', error.message);
+    console.error('❌ Email sending failed:', error);
     return res.status(500).json({
       success: false,
       error: 'Failed to send email. Please try again later.',
