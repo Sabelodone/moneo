@@ -89,7 +89,7 @@ export default function Footer() {
               <div className="flex items-center gap-3">
                 <Globe className="w-4 h-4 text-red-500 flex-shrink-0" />
                 <a
-                  href="https://www.moneofilms.co.za"
+                  href="https://moneofilms.co.za"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="font-light text-white/60 text-sm hover:text-white transition-colors"
